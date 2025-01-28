@@ -157,23 +157,17 @@ python scripts/detect_email.py
 
 ## **Challenges Faced**
 
-1. **Data Imbalance**:  
-   Initially, the dataset was unbalanced, making it difficult for the model to generalize. This was mitigated by rebalancing the data and careful feature selection.
-
-2. **Misclassifications**:  
-   Certain nuanced phishing emails, especially those mimicking legitimate communication, posed challenges and pointed to the need for deeper semantic understanding.
-
-3. **Dataset Limitations and Overfitting**:  
+1. **Dataset Limitations and Overfitting**:  
    When starting with the **[Enron Email Dataset](https://www.kaggle.com/datasets/wcukierski/enron-email-dataset)**, I trained the model for several hours and achieved an accuracy of **100%**.  
    - I later realized the Enron dataset contained **only legitimate emails**, causing the model to overfit and classify everything as "Legitimate."  
    - It was a hard lesson but essential for identifying the limitations of real-world datasets.
 
-4. **Switching to a New Dataset**:  
+2. **Switching to a New Dataset**:  
    After discovering the issue, I transitioned to using the **[Human-LLM Generated Phishing and Legitimate Emails Dataset](https://www.kaggle.com/datasets/francescogreco97/human-llm-generated-phishing-legitimate-emails)**.  
    - This dataset has **balanced classes** (2000 phishing emails and 2000 legitimate emails), which provided a much better foundation for training and evaluation.  
    - It also includes **LLM-generated phishing and legitimate emails**, ensuring the model can handle modern phishing tactics.
 
-5. **Future Enhancements**:  
+3. **Future Enhancements**:  
    My plan is to integrate the **[Phishing Email Dataset](https://www.kaggle.com/datasets/naserabdullahalam/phishing-email-dataset/data)**, which has **82,500 phishing emails**, with a balanced sample (~82,000 emails) from the Enron dataset.  
    - This will allow the classifier to handle larger, more diverse datasets and avoid bias while ensuring equal representation of phishing and legitimate emails.
    - This step is critical to achieving a robust, production-ready phishing detection system.
