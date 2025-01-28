@@ -16,6 +16,9 @@
 5. [Setup and Execution](#setup-and-execution)
 6. [Key Findings and Results](#key-findings-and-results)
 7. [Future Improvements](#future-improvements)
+8. [Datasets Used](#datasets-used)
+9. [Challenges Faced](#challenges-faced)
+
 
 ---
 
@@ -151,12 +154,27 @@ python scripts/detect_email.py
 ---
 
 ## **Challenges Faced**
-1. **Data Imbalance**: 
+
+1. **Data Imbalance**:  
    Initially, the dataset was unbalanced, making it difficult for the model to generalize. This was mitigated by rebalancing the data and careful feature selection.
-2. **Misclassifications**: 
+
+2. **Misclassifications**:  
    Certain nuanced phishing emails, especially those mimicking legitimate communication, posed challenges and pointed to the need for deeper semantic understanding.
-3. **Feature Importance**: 
-   Determining which features (e.g., body text vs. subject line) contributed most to the classification required experimentation.
+
+3. **Dataset Limitations and Overfitting**:  
+   When starting with the **[Enron Email Dataset](https://www.kaggle.com/datasets/wcukierski/enron-email-dataset)**, I trained the model for several hours and achieved an accuracy of **100%**.  
+   - I later realized the Enron dataset contained **only legitimate emails**, causing the model to overfit and classify everything as "Legitimate."  
+   - It was a hard lesson but essential for identifying the limitations of real-world datasets.
+
+4. **Switching to a New Dataset**:  
+   After discovering the issue, I transitioned to using the **[Human-LLM Generated Phishing and Legitimate Emails Dataset](https://www.kaggle.com/datasets/francescogreco97/human-llm-generated-phishing-legitimate-emails)**.  
+   - This dataset has **balanced classes** (2000 phishing emails and 2000 legitimate emails), which provided a much better foundation for training and evaluation.  
+   - It also includes **LLM-generated phishing and legitimate emails**, ensuring the model can handle modern phishing tactics.
+
+5. **Future Enhancements**:  
+   My plan is to integrate the **[Phishing Email Dataset](https://www.kaggle.com/datasets/naserabdullahalam/phishing-email-dataset/data)**, which has **82,500 phishing emails**, with a balanced sample (~82,000 emails) from the Enron dataset.  
+   - This will allow the classifier to handle larger, more diverse datasets and avoid bias while ensuring equal representation of phishing and legitimate emails.
+   - This step is critical to achieving a robust, production-ready phishing detection system.
 
 ---
 
@@ -179,4 +197,23 @@ python scripts/detect_email.py
 
 ---
 
-This project demonstrates a comprehensive approach to solving a real-world problem using machine learning. It highlights skills in data preprocessing, feature engineering, model development, and evaluation, while providing a foundation for future improvements and scalability.
+## **Datasets Used**
+
+This project utilized multiple datasets to develop and improve the phishing email classifier:
+
+1. **[Enron Email Dataset](https://www.kaggle.com/datasets/wcukierski/enron-email-dataset)**  
+   - Contains over 500,000 legitimate emails from the Enron Corporation.  
+   - Initially used for training the model but later discovered to contain only legitimate emails, which skewed the results.  
+
+2. **[Human-LLM Generated Phishing and Legitimate Emails Dataset](https://www.kaggle.com/datasets/francescogreco97/human-llm-generated-phishing-legitimate-emails)**  
+   - A balanced multiclass dataset of **4000 emails** containing:
+     - **1000 Human-generated legitimate emails.**
+     - **1000 Human-generated phishing emails.**
+     - **1000 LLM-generated legitimate emails.**
+     - **1000 LLM-generated phishing emails.**  
+   - Used as the primary dataset for training the current working model.
+
+3. **[Phishing Email Dataset](https://www.kaggle.com/datasets/naserabdullahalam/phishing-email-dataset/data)**  
+   - Contains **82,500 phishing emails** from diverse phishing categories.  
+   - Planned for future enhancements to combine with a balanced subset from the Enron dataset for a more robust classifier.
+---
