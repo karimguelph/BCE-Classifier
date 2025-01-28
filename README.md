@@ -79,6 +79,8 @@ Implemented a script for classifying new emails:
 ## **Algorithms Used**
 - **TF-IDF Vectorization**: Converts text into numerical features based on term frequency and inverse document frequency.
 - **Random Forest Classifier**: A robust ensemble learning method for classification tasks.
+- **GridSearchCV**: Used for optimal hyperparameter selection, ensuring the best combination of parameters like `n_estimators`, `max_depth`, and `min_samples_split` for the Random Forest model.
+
 
 ---
 
@@ -130,10 +132,21 @@ python scripts/detect_email.py
 - **Confusion Matrix**:
   Shows how many emails were correctly classified as legitimate or phishing.  
   ![Confusion Matrix](outputs/confusion_matrix.png)
+  - **Explanation**:  
+  The confusion matrix provides insights into the model's performance by showing the number of correct and incorrect classifications:
+  - **True Positives (TP)**: Emails correctly classified as phishing.
+  - **True Negatives (TN)**: Emails correctly classified as legitimate.
+  - **False Positives (FP)**: Legitimate emails incorrectly classified as phishing.
+  - **False Negatives (FN)**: Phishing emails incorrectly classified as legitimate.  
+  This helps identify areas where the model might need improvement.
+
 
 - **AUC-ROC Curve**:  
   Demonstrates the model's performance at various classification thresholds.  
   ![AUC-ROC Curve](outputs/roc_curve.png)
+  - **Explanation**:  
+  The AUC-ROC curve evaluates the model's ability to distinguish between classes (legitimate vs. phishing). A perfect score of **1.0** indicates that the model is highly effective in separating the two classes without overlap.
+
 
 ---
 
