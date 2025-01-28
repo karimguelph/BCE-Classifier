@@ -1,4 +1,4 @@
-# **BEC Email Classifier: Detecting Phishing with Machine Learning**
+# **BEC Email Classifier using Machine Learning**
 > A project built on the **Enron Dataset** containing 500,000+ emails, showcasing how machine learning can detect phishing attempts with precision and reliability.
 
 ---
