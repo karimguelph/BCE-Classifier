@@ -18,6 +18,8 @@
 7. [Future Improvements](#future-improvements)
 8. [Datasets Used](#datasets-used)
 9. [Challenges Faced](#challenges-faced)
+10. [Demo Screenshots](#demo-screenshots)
+
 
 
 ---
@@ -179,21 +181,19 @@ python scripts/detect_email.py
 ---
 
 ## **Future Improvements**
+
 1. **Dataset Expansion**:
-   - Add more real-world phishing email samples from diverse sources.
-   - Include different phishing attack types (e.g., ransomware, job scams).
+   - One of the major lessons from this project was realizing the limitations of using only the **[Enron Email Dataset](https://www.kaggle.com/datasets/wcukierski/enron-email-dataset)**, as it contained only legitimate emails. Moving forward, I plan to use datasets like:
+     - **[Human-LLM Generated Phishing and Legitimate Emails Dataset](https://www.kaggle.com/datasets/francescogreco97/human-llm-generated-phishing-legitimate-emails)**: This balanced dataset already improved the model significantly, handling both human and AI-generated phishing emails.
+     - **[Phishing Email Dataset](https://www.kaggle.com/datasets/naserabdullahalam/phishing-email-dataset/data)**: This dataset includes over **82,500 phishing emails**, which I’ll combine with a balanced subset of around 82,000 emails from the Enron dataset. The goal is to train a more robust and scalable model capable of handling diverse and nuanced phishing attempts.
 
-2. **Model Enhancement**:
-   - Experiment with advanced NLP models like **BERT** or **RoBERTa** for semantic understanding.
-   - Incorporate **ensemble methods** combining multiple classifiers for increased robustness.
+2. **Interactive Interface**:
+   - A future goal is to build a **web application** or **mobile app** for real-time email classification. This will allow users to input email content directly and receive predictions instantly.
+   - I also want to implement **visual explanations**, like highlighting suspicious words or links in emails, to provide users with actionable insights.
 
-3. **Interactive Interface**:
-   - Build a web application or mobile app for real-time email classification.
-   - Include visual explanations (e.g., highlighting suspicious words in the email).
-
-4. **Feature Enrichment**:
-   - Use sender metadata and historical patterns for additional context.
-   - Incorporate URL analysis for detecting malicious links in emails.
+3. **Testing at Scale**:
+   - After fine-tuning the model with the expanded datasets, I plan to test it on larger-scale email datasets to evaluate its performance in real-world scenarios.
+   - The ultimate goal is to create a production-ready phishing email detection system with broad applicability across industries.
 
 ---
 
@@ -217,3 +217,58 @@ This project utilized multiple datasets to develop and improve the phishing emai
    - Contains **82,500 phishing emails** from diverse phishing categories.  
    - Planned for future enhancements to combine with a balanced subset from the Enron dataset for a more robust classifier.
 ---
+
+## **Demo Screenshots**
+
+Below are some screenshots and examples from the project, showcasing different stages of the pipeline and the model's predictions.
+
+### **1. Data Cleaning**
+- The raw email data was cleaned and preprocessed from the previous mode, resulting in the `processed_emails.csv` file. This step ensured that only meaningful features were passed to the model.
+
+-Previous Model.
+![image](https://github.com/user-attachments/assets/fec24a4f-febc-4049-9513-9241944d8a3d)
+
+-The new Model.
+![image](https://github.com/user-attachments/assets/b59f1cc1-7427-4b36-9d97-b142cbfa5353)
+
+---
+
+### **2. Feature Engineering and Model Training**
+![image](https://github.com/user-attachments/assets/61948c22-0095-4faf-94e2-41c4fa9cb9c6)
+
+![image](https://github.com/user-attachments/assets/4c6cdfdf-763d-411e-bf22-3281e6ab0c45)
+
+![image](https://github.com/user-attachments/assets/7bf63370-a471-4fad-98eb-02d61ee6259b)
+
+---
+### **3. Evaluate Model**
+![image](https://github.com/user-attachments/assets/0f14db9b-08b1-4b84-878a-ae93240b01fc)
+
+---
+### **4. Feature Engineering with added vectorizer saving feature for real-time detection**
+
+![image](https://github.com/user-attachments/assets/d8519f9b-7bdf-4c5e-b76a-0af0380fff84)
+
+---
+### **5. Example Phishing Emails**
+Here are a few examples of phishing emails used in the training process:
+
+#### **Example 1:**
+- **Subject**: Urgent: Verify Your Account Information  
+- **Body**: Dear Customer, We detected unusual activity in your account. Please verify your account information immediately to avoid suspension. Copy and paste this link into your browser to confirm your details: http://fakebankingsecure.com Regards, Support Team
+
+
+#### **Example 2:**
+- **Subject**: Your Payment Has Been Declined  
+- **Body**: Dear User, Your recent payment could not be processed. To continue using our service, please update your billing information immediately. Copy and paste the following link into your browser: http://secure-billpay.com Sincerely, Payment Processing Team
+---
+
+### **6. Correctly Identified Phishing Emails**
+Here’s an example of the model successfully identifying the phishing emails:
+![image](https://github.com/user-attachments/assets/26c9250a-5912-4cc1-af9a-da131d72cb02)
+
+---
+
+### **7. Correctly Identified Legitimate Emails**
+Here’s an example of the model correctly classifying a legitimate email:
+![image](https://github.com/user-attachments/assets/8b2a1370-4018-4be2-9922-eaba27a6aee4)
