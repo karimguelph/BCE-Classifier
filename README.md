@@ -88,3 +88,82 @@ Run the following command to install all required libraries:
 ```bash
 pip install -r requirements.txt
 ```
+### **Step 2: Run Scripts**
+Follow these steps to execute the project in sequence:
+
+1. **Data Preparation**: Preprocess the raw dataset and save it for feature extraction.  
+   ```bash
+python scripts/preprocess.py
+```
+
+
+2. **Feature Engineering**: Extract numerical features from email text using TF-IDF and save the vectorized output.  
+   ```bash
+python scripts/feature_engineering.py
+```
+
+
+3. **Model Training**: Train the Random Forest Classifier with GridSearchCV and save the trained model.  
+   ```bash
+python scripts/train_model.py
+```
+
+
+4. **Evaluation**: Evaluate the model on the test dataset and generate performance metrics and visualizations.  
+   ```bash
+python scripts/evaluate_model.py
+```
+
+5. **Real-Time Detection**: Test the model with custom email inputs to classify them as "Legitimate" or "Phishing".  
+   ```bash
+python scripts/detect_email.py
+```
+
+---
+
+## **Key Findings and Results**
+### **1. Performance Metrics**
+- **Accuracy**: Achieved ~99.58% accuracy on the test set.
+- **AUC-ROC Score**: 1.00, indicating perfect discrimination between legitimate and phishing emails.
+
+### **2. Visual Results**
+- **Confusion Matrix**:
+  Shows how many emails were correctly classified as legitimate or phishing.  
+  ![Confusion Matrix](outputs/confusion_matrix.png)
+
+- **AUC-ROC Curve**:  
+  Demonstrates the model's performance at various classification thresholds.  
+  ![AUC-ROC Curve](outputs/roc_curve.png)
+
+---
+
+## **Challenges Faced**
+1. **Data Imbalance**: 
+   Initially, the dataset was unbalanced, making it difficult for the model to generalize. This was mitigated by rebalancing the data and careful feature selection.
+2. **Misclassifications**: 
+   Certain nuanced phishing emails, especially those mimicking legitimate communication, posed challenges and pointed to the need for deeper semantic understanding.
+3. **Feature Importance**: 
+   Determining which features (e.g., body text vs. subject line) contributed most to the classification required experimentation.
+
+---
+
+## **Future Improvements**
+1. **Dataset Expansion**:
+   - Add more real-world phishing email samples from diverse sources.
+   - Include different phishing attack types (e.g., ransomware, job scams).
+
+2. **Model Enhancement**:
+   - Experiment with advanced NLP models like **BERT** or **RoBERTa** for semantic understanding.
+   - Incorporate **ensemble methods** combining multiple classifiers for increased robustness.
+
+3. **Interactive Interface**:
+   - Build a web application or mobile app for real-time email classification.
+   - Include visual explanations (e.g., highlighting suspicious words in the email).
+
+4. **Feature Enrichment**:
+   - Use sender metadata and historical patterns for additional context.
+   - Incorporate URL analysis for detecting malicious links in emails.
+
+---
+
+This project demonstrates a comprehensive approach to solving a real-world problem using machine learning. It highlights skills in data preprocessing, feature engineering, model development, and evaluation, while providing a foundation for future improvements and scalability.
