@@ -92,30 +92,30 @@ pip install -r requirements.txt
 Follow these steps to execute the project in sequence:
 
 1. **Data Preparation**: Preprocess the raw dataset and save it for feature extraction.  
-   ```bash
+```bash
 python scripts/preprocess.py
 ```
 
 
 2. **Feature Engineering**: Extract numerical features from email text using TF-IDF and save the vectorized output.  
-   ```bash
+```bash
 python scripts/feature_engineering.py
 ```
 
 
 3. **Model Training**: Train the Random Forest Classifier with GridSearchCV and save the trained model.  
-   ```bash
+```bash
 python scripts/train_model.py
 ```
 
 
 4. **Evaluation**: Evaluate the model on the test dataset and generate performance metrics and visualizations.  
-   ```bash
+```bash
 python scripts/evaluate_model.py
 ```
 
 5. **Real-Time Detection**: Test the model with custom email inputs to classify them as "Legitimate" or "Phishing".  
-   ```bash
+```bash
 python scripts/detect_email.py
 ```
 
