@@ -251,7 +251,7 @@ Below are some screenshots and examples from the project, showcasing different s
 
 ---
 ### **5. Example Phishing Emails**
-Here are a few examples of phishing emails used in the training process:
+Here are a few examples of phishing emails used in the testing process:
 
 #### **Example 1:**
 - **Subject**: Urgent: Verify Your Account Information  
