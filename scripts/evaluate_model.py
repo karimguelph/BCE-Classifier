@@ -6,16 +6,26 @@ import pickle
 from sklearn.metrics import classification_report, confusion_matrix, roc_auc_score, roc_curve
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
+
+# Paths
+FEATURES_FILE = os.path.join("data", "features.npy")
+LABELS_FILE = os.path.join("data", "labels.npy")
+MODEL_FILE = os.path.join("models", "email_classifier.pkl")
+OUTPUT_DIR = "outputs"
+
+# Ensure output directory exists
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # Load the trained model
 print("Loading the trained model...")
-with open('models/email_classifier.pkl', 'rb') as f:
+with open(MODEL_FILE, 'rb') as f:
     model = pickle.load(f)
 
 # Load test dataset
 print("Loading test data...")
-X_test = np.load('data/features.npy')[413920:]
-y_test = np.load('data/labels.npy')[413920:]
+X_test = np.load(FEATURES_FILE)
+y_test = np.load(LABELS_FILE)
 
 # Check test data label distribution
 print(f"Test set label distribution: {np.unique(y_test, return_counts=True)}")
@@ -33,23 +43,18 @@ except (IndexError, AttributeError):
 
 # Evaluate metrics
 print("Calculating evaluation metrics...")
-try:
-    report = classification_report(
-        y_test, y_pred,
-        target_names=['Legitimate', 'BEC Attempt'],
-        labels=[0, 1],
-        zero_division=0
-    )
-except ValueError as e:
-    print(f"Error generating classification report: {e}")
-    report = "Unable to generate report due to single-class issue."
-
+report = classification_report(
+    y_test, y_pred,
+    target_names=['Legitimate', 'Phishing'],
+    zero_division=0
+)
 conf_matrix = confusion_matrix(y_test, y_pred, labels=[0, 1])
-roc_auc = roc_auc_score(y_test, y_pred_proba) if len(set(y_test)) > 1 else 0.0
+roc_auc = roc_auc_score(y_test, y_pred_proba) if len(np.unique(y_test)) > 1 else 0.0
 
 # Save the evaluation report to a markdown file
 print("Saving evaluation report...")
-with open("evaluation_report.md", "w") as f:
+report_path = os.path.join(OUTPUT_DIR, "evaluation_report.md")
+with open(report_path, "w") as f:
     f.write("# Evaluation Report\n")
     f.write(f"### Model Performance Metrics\n")
     f.write(f"- **ROC AUC Score**: {roc_auc:.2f}\n\n")
@@ -62,17 +67,16 @@ with open("evaluation_report.md", "w") as f:
 
 # Plot and save confusion matrix
 print("Plotting confusion matrix...")
-class_names = ['Legitimate', 'BEC Attempt']
-sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', xticklabels=class_names, yticklabels=class_names)
+sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', xticklabels=['Legitimate', 'Phishing'], yticklabels=['Legitimate', 'Phishing'])
 plt.title('Confusion Matrix')
 plt.xlabel('Predicted')
 plt.ylabel('Actual')
-plt.savefig('outputs/confusion_matrix.png')
+plt.savefig(os.path.join(OUTPUT_DIR, 'confusion_matrix.png'))
 plt.close()
 
 # Plot and save ROC curve
 print("Plotting ROC curve...")
-if len(set(y_test)) > 1:
+if len(np.unique(y_test)) > 1:
     fpr, tpr, _ = roc_curve(y_test, y_pred_proba)
     plt.figure()
     plt.plot(fpr, tpr, label=f'AUC = {roc_auc:.4f}')
@@ -81,7 +85,7 @@ if len(set(y_test)) > 1:
     plt.xlabel('False Positive Rate')
     plt.ylabel('True Positive Rate')
     plt.legend(loc='lower right')
-    plt.savefig('outputs/roc_curve.png')
+    plt.savefig(os.path.join(OUTPUT_DIR, 'roc_curve.png'))
     plt.close()
 
 print("Evaluation completed!")

@@ -3,17 +3,27 @@ import re
 import os
 
 # Paths for the data files
-INPUT_FILE = os.path.join("data", "emails.csv")
+LEGIT_FILE = os.path.join("data", "legit.csv")
+PHISHING_FILE = os.path.join("data", "phishing.csv")
 OUTPUT_FILE = os.path.join("data", "processed_emails.csv")
 
-def load_data(file_path):
-    """Load the dataset into a pandas DataFrame."""
+def load_and_merge_data(legit_path, phishing_path):
+    """Load legitimate and phishing emails, and merge them into a single DataFrame."""
     try:
-        data = pd.read_csv(file_path, encoding="latin1")
-        print(f"Loaded dataset with {data.shape[0]} rows and {data.shape[1]} columns.")
+        legit = pd.read_csv(legit_path)
+        phishing = pd.read_csv(phishing_path)
+        print(f"Loaded {legit.shape[0]} legitimate emails and {phishing.shape[0]} phishing emails.")
+        
+        # Assign labels: 0 for legitimate, 1 for phishing
+        legit["label"] = 0
+        phishing["label"] = 1
+
+        # Combine the datasets
+        data = pd.concat([legit, phishing], ignore_index=True)
+        print(f"Merged dataset contains {data.shape[0]} rows and {data.shape[1]} columns.")
         return data
-    except FileNotFoundError:
-        print(f"Error: File not found at {file_path}")
+    except FileNotFoundError as e:
+        print(f"Error: {e}")
         return None
 
 def clean_text(text):
@@ -25,11 +35,11 @@ def clean_text(text):
 
 def preprocess_data(data):
     """Clean and preprocess the data."""
-    if "message" not in data.columns:
-        raise ValueError("The dataset does not have a 'message' column.")
-    
+    if "body" not in data.columns:  # Replace 'body' if the actual column name differs
+        raise ValueError("The dataset does not have the expected column for email content.")
+
     # Clean the email content
-    data["cleaned_message"] = data["message"].apply(lambda x: clean_text(str(x)))
+    data["cleaned_message"] = data["body"].apply(lambda x: clean_text(str(x)))
     
     # Drop duplicates and missing values
     data.drop_duplicates(subset=["cleaned_message"], inplace=True)
@@ -46,8 +56,8 @@ def save_data(data, file_path):
 if __name__ == "__main__":
     print("Starting data preprocessing...")
 
-    # Step 1: Load the raw dataset
-    raw_data = load_data(INPUT_FILE)
+    # Step 1: Load and merge the datasets
+    raw_data = load_and_merge_data(LEGIT_FILE, PHISHING_FILE)
     if raw_data is not None:
         # Step 2: Preprocess the data
         processed_data = preprocess_data(raw_data)
